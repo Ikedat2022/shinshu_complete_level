@@ -1,0 +1,70 @@
+.nagano_city_map {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 10px;
+    width: 400px; /* Adjust the width as needed */
+    height: 500px; /* Adjust the height as needed */
+}
+
+.one-one {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.one-two {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.two-one {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.two-two {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.three-one {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.three-two {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.four-one {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+.four-two {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+.five-one {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+.five-two {
+    grid-column: 2;
+    grid-row: 5;
+}
+
+.six-one {
+    grid-column: 1;
+    grid-row: 6;
+}
+
+.six-two {
+    justify-self: end;
+    grid-column: 2;
+    grid-row: 6;
+    text-align: end;
+}
