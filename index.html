@@ -56,7 +56,9 @@
         <div class="nagano_map">
             <h1>信州制県レベル</h1>
             <p>あなたは広大な信濃の国を、どれくらい制覇していますか？</p>
-            <p v-if="shinshuSeikenPoint >= 0">あなたの信州制県レベルは、、{{shinshuSeikenPoint}} ポイントです！</p>
+            <p>あなたの信州制県ステータスは、、<br><strong>{{ shinshuCompleteLevelStatus }}</strong>です！</p>
+            <p>{{ shinshuCompleteLevelMsg }}</p>
+            <p v-if="shinshuCompletePoint >= 0">あなたの信州制県レベルは、、<strong>{{shinshuCompletePoint}} / 66ポイント</strong>です！</p>
             <div class="resetPullDown">
                 <button v-on:click="resetPullDown">Lvリセット</button>
                 <br>
@@ -264,23 +266,110 @@
     <script>
         new Vue({
             el: '#app',
-            data: {
-                kitaAzumiValue: '0',
-                hokushinValue: '0',
-                naganoValue: '0',
-                uedaValue: '0',
-                matsumotoValue: '0',
-                sakuValue: '0',
-                kamikouchiValue: '0',
-                kisoValue: '0',
-                suwaValue: '0',
-                kamiinaValue: '0',
-                shimoinaValue: '0',
-                shinshuSeikenPoint: 0
+            data() {
+                return {
+                    shinshuCompletePoint: 0,
+                    shinshuCompleteLevelStatus: "",
+                    shinshuCompleteLevelMsg: "",
+                    kitaAzumiValue: '0',
+                    hokushinValue: '0',
+                    naganoValue: '0',
+                    uedaValue: '0',
+                    matsumotoValue: '0',
+                    sakuValue: '0',
+                    kamikouchiValue: '0',
+                    kisoValue: '0',
+                    suwaValue: '0',
+                    kamiinaValue: '0',
+                    shimoinaValue: '0'
+                };
             },
             methods: {
-                calculateShinshuSeikenPoint() {
-                    this.shinshuSeikenPoint = parseInt(this.kitaAzumiValue)
+                announceLevel() {
+                    if (this.shinshuCompletePoint > 55) {
+                        this.shinshuCompleteLevelStatus = "信州人"
+                        this.shinshuCompleteLevelMsg = "あなたは生粋の信州人ですね！"
+                    } else if (this.kitaAzumiValue < 2
+                        && this.hokushinValue < 2
+                        && this.naganoValue > 2
+                        && this.uedaValue < 2
+                        && this.matsumotoValue > 2
+                        && this.sakuValue < 2
+                        && this.kamikouchiValue < 2
+                        && this.kisoValue < 2
+                        && this.suwaValue < 2
+                        && this.kamiinaValue < 2
+                        && this.shimoinaValue < 2) {
+                        this.shinshuCompleteLevelStatus = "都会人"
+                        this.shinshuCompleteLevelMsg = "ぜひ松本や長野以外にも信州を楽しんでみてください！"
+                    } else if (this.shinshuCompletePoint > 52
+                        && this.kitaAzumiValue > 3
+                        && this.hokushinValue > 3
+                        && this.naganoValue > 3
+                        && this.uedaValue > 3
+                        && this.matsumotoValue > 3
+                        && this.sakuValue > 3
+                        && this.kamikouchiValue > 3
+                        && this.kisoValue > 3
+                        && this.suwaValue > 3
+                        && this.kamiinaValue > 3
+                        && this.shimoinaValue > 3) {
+                        this.shinshuCompleteLevelStatus = "信州マスター"
+                        this.shinshuCompleteLevelMsg = "これからも信州にたくさん訪れてくださいね！"
+                    } else if (this.shinshuCompletePoint > 40) {
+                        this.shinshuCompleteLevelStatus = "信州ラバー"
+                        this.shinshuCompleteLevelMsg = "信州マスター目指してこれからもたくさん訪れてください！"
+                    } else if (this.shinshuCompletePoint > 28) {
+                        this.shinshuCompleteLevelStatus = "信州マニア"
+                        this.shinshuCompleteLevelMsg = "信州ラバー目指していろいろなところを訪れてくださいね！"
+                    } else if (this.shinshuCompletePoint > 12) {
+                        this.shinshuCompleteLevelStatus = "信州好き"
+                        this.shinshuCompleteLevelMsg = "もっといろいろなところを訪れて信州をさらに楽しんでくださいね！"
+                    } else if (this.shinshuCompletePoint > 6) {
+                        this.shinshuCompleteLevelStatus = "信州ファン"
+                        this.shinshuCompleteLevelMsg = "いろいろなところを訪れて信州を楽しんでくださいね！"
+                    } else if (this.shinshuCompletePoint == this.sakuValue
+                        && this.sakuValue > 1) {
+                        this.shinshuCompleteLevelStatus = "軽井沢ファン"
+                        this.shinshuCompleteLevelMsg = "ぜひ軽井沢より先の信州にも行ってみてください！"
+                    } else if (this.shinshuCompletePoint > 3
+                        && this.kitaAzumiValue < 6
+                        && this.hokushinValue < 6
+                        && this.naganoValue < 6
+                        && this.uedaValue < 6
+                        && this.matsumotoValue < 6
+                        && this.sakuValue < 6
+                        && this.kamikouchiValue < 6
+                        && this.kisoValue < 6
+                        && this.suwaValue < 6
+                        && this.kamiinaValue < 6
+                        && this.shimoinaValue < 6) {
+                        this.shinshuCompleteLevelStatus = "信州ツーリスト"
+                        this.shinshuCompleteLevelMsg = "ぜひまた信州にきてください！"
+                    } else if (this.shinshuCompletePoint > 5
+                        || this.kitaAzumiValue == 6
+                        || this.hokushinValue == 6
+                        || this.naganoValue == 6
+                        || this.uedaValue == 6
+                        || this.matsumotoValue == 6
+                        || this.sakuValue == 6
+                        || this.kamikouchiValue == 6
+                        || this.kisoValue == 6
+                        || this.suwaValue == 6
+                        || this.kamiinaValue == 6
+                        || this.shimoinaValue == 6) {
+                        this.shinshuCompleteLevelStatus = "信州レジデント"
+                        this.shinshuCompleteLevelMsg = "信州に住んでくれてありがとう！"
+                    } else if (this.shinshuCompletePoint > 3) {
+                        this.shinshuCompleteLevelStatus = "信州ツーリスト"
+                        this.shinshuCompleteLevelMsg = "ぜひまた信州にきてください！"
+                    } else {
+                        this.shinshuCompleteLevelStatus = "信州ビギナー"
+                        this.shinshuCompleteLevelMsg = "ぜひ信州にたくさん来てください！"
+                    }
+                },
+                calculateshinshuCompletePoint() {
+                    this.shinshuCompletePoint = parseInt(this.kitaAzumiValue)
                         + parseInt(this.hokushinValue)
                         + parseInt(this.naganoValue)
                         + parseInt(this.uedaValue)
@@ -304,46 +393,58 @@
                     this.kisoValue = 0
                     this.kamiinaValue = 0
                     this.shimoinaValue = 0
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
                 }
             },
             watch: {
                 kitaAzumiValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 hokushinValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 naganoValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 uedaValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 matsumotoValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 sakuValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 kamikouchiValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 suwaValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 kisoValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 kamiinaValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 },
                 shimoinaValue: function () {
-                    this.calculateShinshuSeikenPoint()
+                    this.calculateshinshuCompletePoint()
+                    this.announceLevel()
                 }
             },
             created() {
-                this.calculateShinshuSeikenPoint()
+                this.calculateshinshuCompletePoint()
+                this.announceLevel()
             }
 
         })
