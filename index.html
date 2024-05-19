@@ -15,38 +15,114 @@
             height: 300px;
         }
 
-        /*      
-        .resetPullDown {
-            display: grid;
-        }
-        */
-
         .grid-item {
             padding: 10px;
         }
 
         .skyblue-bg {
             background-color: skyblue;
+            background-blend-mode: multiply;
         }
 
         .yellowgreen-bg {
             background-color: yellowgreen;
+            background-blend-mode: multiply;
         }
 
         .orange-bg {
             background-color: orange;
+            background-blend-mode: multiply;
         }
 
         .violet-bg {
             background-color: violet;
+            background-blend-mode: multiply;
         }
 
         .teal-bg {
             background-color: teal;
+            background-blend-mode: multiply;
         }
 
         .orangered-bg {
             background-color: orangered;
+            background-blend-mode: multiply;
+        }
+
+        .nagano_prefectur_photo {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .nagano_prefectur_photo img {
+            max-width: 50%;
+            height: auto;
+        }
+
+        .image-container {
+            display: grid;
+            /**
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+**/
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+            background-size: 200% 600%;
+            /* 画像を12分割するために背景サイズを2倍に設定 */
+
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        .image-container div {
+            background-image: url('images/naganoPrefecturePhoto.png');
+            background-size: 300% 200%;
+        }
+
+        .top-left {
+            background-position: 0 0;
+        }
+
+        .top-center {
+            background-position: 50% 0;
+        }
+
+        .top-right {
+            background-position: 100% 0;
+        }
+
+        .middle-left {
+            background-position: 0 100%;
+        }
+
+        .middle-center {
+            background-position: 50% 100%;
+        }
+
+        .middle-right {
+            background-position: 100% 100%;
+        }
+
+        .bottom-left {
+            background-position: 0 200%;
+        }
+
+        .bottom-center {
+            background-position: 50% 200%;
+        }
+
+        .bottom-right {
+            background-position: 100% 200%;
+        }
+
+        .far-left {
+            background-position: 0 300%;
+        }
+
+        .far-center {
+            background-position: 100% 300%;
         }
     </style>
 </head>
@@ -63,14 +139,26 @@
                 <button v-on:click="resetPullDown">Lvリセット</button>
                 <br>
             </div>
+
+            <div class="image-container">
+                <div class="top-left" area-label="1"></div>
+                <div class="top-center" area-label="2"></div>
+                <div class="top-right" area-label="3"></div>
+                <div class="middle-left" area-label="4"></div>
+                <div class="middle-center" area-label="5"></div>
+                <div class="middle-right" area-label="6"></div>
+                <div class="bottom-left" area-label="7"></div>
+                <div class="bottom-center" area-label="8"></div>
+                <div class="bottom-right" area-label="9"></div>
+                <div class="far-left" area-label="10"></div>
+                <div class="far-center" area-label="11"></div>
+                <div class="far-right" area-label="12"></div>
+              
+            </div>
+            <br>
+            <h2>入力値</h2>
             <div class="nagano_city_map">
-                <li class="grid-item one-one" :class="{
-                    'skyblue-bg': kitaAzumiValue === '1',
-                    'yellowgreen-bg': kitaAzumiValue === '2',
-                    'orange-bg': kitaAzumiValue === '3',
-                    'violet-bg': kitaAzumiValue === '4',
-                    'teal-bg': kitaAzumiValue === '5',
-                    'orangered-bg': kitaAzumiValue === '6'}" area-label="北安曇" id="kitaAzumi">
+                <li class="grid-item one-one" :class="kitaAzumiClass" area-label="北安曇" id="kitaAzumi">
                     北安曇(白馬・大町)<select v-model="kitaAzumiValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -81,13 +169,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item one-two" :class="{
-                'skyblue-bg': hokushinValue === '1',
-                'yellowgreen-bg': hokushinValue === '2',
-                'orange-bg': hokushinValue === '3',
-                'violet-bg': hokushinValue === '4',
-                'teal-bg': hokushinValue === '5',
-                'orangered-bg': hokushinValue === '6'}" area-label="北信" id="hokushin">
+                <li class="grid-item one-two" :class="hokushinClass" area-label="北信" id="hokushin">
                     北信(飯山・野沢温泉)<select v-model="hokushinValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -98,13 +180,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item two-one" :class="{
-                    'skyblue-bg': naganoValue === '1',
-                    'yellowgreen-bg': naganoValue === '2',
-                    'orange-bg': naganoValue === '3',
-                    'violet-bg': naganoValue === '4',
-                    'teal-bg': naganoValue === '5',
-                    'orangered-bg': naganoValue === '6'}" area-label="長野" id="nagano">
+                <li class="grid-item two-one" :class="naganoClass" area-label="長野" id="nagano">
                     長野(千曲・戸隠)<select v-model="naganoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -115,13 +191,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item two-two" :class="{
-                    'skyblue-bg': uedaValue === '1',
-                    'yellowgreen-bg': uedaValue === '2',
-                    'orange-bg': uedaValue === '3',
-                    'violet-bg': uedaValue === '4',
-                    'teal-bg': uedaValue === '5',
-                    'orangered-bg': uedaValue === '6'}" area-label="上田" id="ueda">
+                <li class="grid-item two-two" :class="uedaClass" area-label="上田" id="ueda">
                     上田(別所・菅平)<select v-model="uedaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -132,13 +202,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item three-one" :class="{
-                        'skyblue-bg': matsumotoValue === '1',
-                        'yellowgreen-bg': matsumotoValue === '2',
-                        'orange-bg': matsumotoValue === '3',
-                        'violet-bg': matsumotoValue === '4',
-                        'teal-bg': matsumotoValue === '5',
-                        'orangered-bg': matsumotoValue === '6'}" area-label="松本">
+                <li class="grid-item three-one" :class="matsumotoClass" area-label="松本">
                     松本(安曇野・常念岳)<select v-model="matsumotoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -149,13 +213,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item three-two" :class="{
-                    'skyblue-bg': sakuValue === '1',
-                    'yellowgreen-bg': sakuValue === '2',
-                    'orange-bg': sakuValue === '3',
-                    'violet-bg': sakuValue === '4',
-                    'teal-bg': sakuValue === '5',
-                    'orangered-bg': sakuValue === '6'}" area-label="佐久">
+                <li class="grid-item three-two" :class="sakuClass" area-label="佐久">
                     佐久(小諸・軽井沢)<select v-model="sakuValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -166,13 +224,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item four-one" :class="{
-                        'skyblue-bg': kamikouchiValue === '1',
-                        'yellowgreen-bg': kamikouchiValue === '2',
-                        'orange-bg': kamikouchiValue === '3',
-                        'violet-bg': kamikouchiValue === '4',
-                        'teal-bg': kamikouchiValue === '5',
-                        'orangered-bg': kamikouchiValue === '6'}" area-label="上高地">
+                <li class="grid-item four-one" :class="kamikouchiClass" area-label="上高地">
                     上高地(乗鞍・穂高槍)<select v-model="kamikouchiValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -183,13 +235,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item four-two" :class="{
-                    'skyblue-bg': suwaValue === '1',
-                    'yellowgreen-bg': suwaValue === '2',
-                    'orange-bg': suwaValue === '3',
-                    'violet-bg': suwaValue === '4',
-                    'teal-bg': suwaValue === '5',
-                    'orangered-bg': suwaValue === '6'}" area-label="諏訪">
+                <li class="grid-item four-two" :class="suwaClass" area-label="諏訪">
                     諏訪(霧ヶ峰・八ヶ岳)<select v-model="suwaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -200,13 +246,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item five-one" :class="{
-                    'skyblue-bg': kisoValue === '1',
-                    'yellowgreen-bg': kisoValue === '2',
-                    'orange-bg': kisoValue === '3',
-                    'violet-bg': kisoValue === '4',
-                    'teal-bg': kisoValue === '5',
-                    'orangered-bg': kisoValue === '6'}" area-label="木曽">
+                <li class="grid-item five-one" :class="kisoClass" area-label="木曽">
                     木曽(奈良井・妻籠)<select v-model="kisoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -217,13 +257,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item five-two" :class="{
-                    'skyblue-bg': kamiinaValue === '1',
-                    'yellowgreen-bg': kamiinaValue === '2',
-                    'orange-bg': kamiinaValue === '3',
-                    'violet-bg': kamiinaValue === '4',
-                    'teal-bg': kamiinaValue === '5',
-                    'orangered-bg': kamiinaValue === '6'}" area-label="上伊那">
+                <li class="grid-item five-two" :class="kamiinaClass" area-label="上伊那">
                     上伊那(伊那・木曽駒)<select v-model="kamiinaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -234,13 +268,7 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item six-one" :class="{
-                    'skyblue-bg': shimoinaValue === '1',
-                    'yellowgreen-bg': shimoinaValue === '2',
-                    'orange-bg': shimoinaValue === '3',
-                    'violet-bg': shimoinaValue === '4',
-                    'teal-bg': shimoinaValue === '5',
-                    'orangered-bg': shimoinaValue === '6'}" area-label="下伊那">
+                <li class="grid-item six-one" :class="shimoinaClass" area-label="下伊那">
                     下伊那(飯田・天竜峡)<select v-model="shimoinaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
@@ -251,14 +279,6 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <!--
-                <p>Lv.0: Never / 未訪問</p>
-                <p>Lv.1: Passed / 通過した</p>
-                <p>Lv.2: Alighted / 降りた</p>
-                <p>Lv.3: Visited / 歩いた</p>
-                <p>Lv.4: Stayed / 泊まった</p>
-                <p>Lv.6: Lived / 住んだ</p>
-                -->
             </div>
         </div>
     </div>
@@ -284,7 +304,276 @@
                     shimoinaValue: '0'
                 };
             },
+            computed: {
+                kitaAzumiClass() {
+                    switch (this.kitaAzumiValue) {
+                        case '1':
+                            document.querySelector('.top-left').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.top-left').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.top-left').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.top-left').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.top-left').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.top-left').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                hokushinClass() {
+                    switch (this.hokushinValue) {
+                        case '1':
+                            document.querySelector('.top-center').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.top-center').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.top-center').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.top-center').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.top-center').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.top-center').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                naganoClass() {
+                    switch (this.naganoValue) {
+                        case '1':
+                            document.querySelector('.top-right').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.top-right').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.top-right').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.top-right').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.top-right').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.top-right').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                uedaClass() {
+                    switch (this.uedaValue) {
+                        case '1':
+                            document.querySelector('.middle-left').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.middle-left').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.middle-left').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.middle-left').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.middle-left').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.middle-left').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                matsumotoClass() {
+                    switch (this.matsumotoValue) {
+                        case '1':
+                            document.querySelector('.middle-center').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.middle-center').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.middle-center').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.middle-center').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.middle-center').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.middle-center').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                sakuClass() {
+                    switch (this.sakuValue) {
+                        case '1':
+                            document.querySelector('.far-left').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.far-left').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.far-left').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.far-left').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.far-left').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.far-left').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                kamikouchiClass() {
+                    switch (this.kamikouchiValue) {
+                        case '1':
+                            document.querySelector('.bottom-left').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.bottom-left').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.bottom-left').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.bottom-left').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.bottom-left').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.bottom-left').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                suwaClass() {
+                    switch (this.suwaValue) {
+                        case '1':
+                            document.querySelector('.bottom-center').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.bottom-center').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.bottom-center').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.bottom-center').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.bottom-center').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.bottom-center').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                kisoClass() {
+                    switch (this.kisoValue) {
+                        case '1':
+                            document.querySelector('.bottom-right').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.bottom-right').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.bottom-right').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.bottom-right').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.bottom-right').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.bottom-right').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                kamiinaClass() {
+                    switch (this.kamiinaValue) {
+                        case '1':
+                            document.querySelector('.bottom-right').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.bottom-right').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.bottom-right').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.bottom-right').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.bottom-right').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.bottom-right').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+                shimoinaClass() {
+                    switch (this.shimoinaValue) {
+                        case '1':
+                            document.querySelector('.far-center').classList.add('skyblue-bg');
+                            return 'skyblue-bg';
+                        case '2':
+                            document.querySelector('.far-center').classList.add('yellowgreen-bg');
+                            return 'yellowgreen-bg';
+                        case '3':
+                            document.querySelector('.far-center').classList.add('orange-bg');
+                            return 'orange-bg';
+                        case '4':
+                            document.querySelector('.far-center').classList.add('violet-bg');
+                            return 'violet-bg';
+                        case '5':
+                            document.querySelector('.far-center').classList.add('teal-bg');
+                            return 'teal-bg';
+                        case '6':
+                            document.querySelector('.far-center').classList.add('orangered-bg');
+                            return 'orangered-bg';
+                        default:
+                            return '';
+                    }
+                },
+            },
             methods: {
+                getKitaAzumiClass() {
+                    return this.kitaAzumiClass;
+                },
                 announceLevel() {
                     if (this.shinshuCompletePoint > 55) {
                         this.shinshuCompleteLevelStatus = "信州人"

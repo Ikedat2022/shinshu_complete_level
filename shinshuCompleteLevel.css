@@ -10,6 +10,7 @@
 .one-one {
     grid-column: 1;
     grid-row: 1;
+    background-position: 0 0;
 }
 
 .one-two {
