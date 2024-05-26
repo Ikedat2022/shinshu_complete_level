@@ -62,15 +62,10 @@
 
         .image-container {
             display: grid;
-            /**
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-**/
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
             background-size: 200% 600%;
             /* 画像を12分割するために背景サイズを2倍に設定 */
-
             width: 400px;
             height: 400px;
             position: relative;
@@ -78,51 +73,55 @@
 
         .image-container div {
             background-image: url('images/naganoPrefecturePhoto.png');
-            background-size: 300% 200%;
+            background-size: 200% 600%;
         }
 
         .top-left {
-            background-position: 0 0;
+            background-position: 0% 0;
         }
 
         .top-center {
-            background-position: 50% 0;
-        }
-
-        .top-right {
             background-position: 100% 0;
         }
 
+        .top-right {
+            background-position: 0% 20%;
+        }
+
         .middle-left {
-            background-position: 0 100%;
+            background-position: 100% 20%;
         }
 
         .middle-center {
-            background-position: 50% 100%;
+            background-position: 0 40%;
         }
 
         .middle-right {
-            background-position: 100% 100%;
+            background-position: 100% 40%;
         }
 
         .bottom-left {
-            background-position: 0 200%;
+            background-position: 0 60%;
         }
 
         .bottom-center {
-            background-position: 50% 200%;
+            background-position: 100% 60%;
         }
 
         .bottom-right {
-            background-position: 100% 200%;
+            background-position: 0 80%;
         }
 
         .far-left {
-            background-position: 0 300%;
+            background-position: 100% 80%;
         }
 
         .far-center {
-            background-position: 100% 300%;
+            background-position: 0 100%;
+        }
+
+        .far-right {
+            background-position: 100% 100%;
         }
     </style>
 </head>
@@ -139,7 +138,19 @@
                 <button v-on:click="resetPullDown">Lvリセット</button>
                 <br>
             </div>
-
+            <div class="container">
+                <div class="segment segment-1" :class="kitaAzumiClass"></div>
+                <div class="segment segment-2"></div>
+                <div class="segment segment-3"></div>
+                <div class="segment segment-4"></div>
+                <div class="segment segment-5"></div>
+                <div class="segment segment-6"></div>
+                <div class="segment segment-7"></div>
+                <div class="segment segment-8"></div>
+                <div class="segment segment-9"></div>
+                <div class="segment segment-10"></div>
+                <div class="segment segment-11"></div>
+            </div>
             <div class="image-container">
                 <div class="top-left" area-label="1"></div>
                 <div class="top-center" area-label="2"></div>
@@ -153,13 +164,13 @@
                 <div class="far-left" area-label="10"></div>
                 <div class="far-center" area-label="11"></div>
                 <div class="far-right" area-label="12"></div>
-              
+
             </div>
             <br>
             <h2>入力値</h2>
             <div class="nagano_city_map">
                 <li class="grid-item one-one" :class="kitaAzumiClass" area-label="北安曇" id="kitaAzumi">
-                    北安曇(白馬・大町)<select v-model="kitaAzumiValue">
+                    北安曇(白馬・大町)<select v-model.number="kitaAzumiValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -170,7 +181,7 @@
                     </select>
                 </li>
                 <li class="grid-item one-two" :class="hokushinClass" area-label="北信" id="hokushin">
-                    北信(飯山・野沢温泉)<select v-model="hokushinValue">
+                    北信(飯山・野沢温泉)<select v-model.number="hokushinValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -181,7 +192,7 @@
                     </select>
                 </li>
                 <li class="grid-item two-one" :class="naganoClass" area-label="長野" id="nagano">
-                    長野(千曲・戸隠)<select v-model="naganoValue">
+                    長野(千曲・戸隠)<select v-model.number="naganoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -192,7 +203,7 @@
                     </select>
                 </li>
                 <li class="grid-item two-two" :class="uedaClass" area-label="上田" id="ueda">
-                    上田(別所・菅平)<select v-model="uedaValue">
+                    上田(別所・菅平)<select v-model.number="uedaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -203,7 +214,7 @@
                     </select>
                 </li>
                 <li class="grid-item three-one" :class="matsumotoClass" area-label="松本">
-                    松本(安曇野・常念岳)<select v-model="matsumotoValue">
+                    松本(安曇野・常念岳)<select v-model.number="matsumotoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -214,7 +225,7 @@
                     </select>
                 </li>
                 <li class="grid-item three-two" :class="sakuClass" area-label="佐久">
-                    佐久(小諸・軽井沢)<select v-model="sakuValue">
+                    佐久(小諸・軽井沢)<select v-model.number="sakuValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -225,7 +236,7 @@
                     </select>
                 </li>
                 <li class="grid-item four-one" :class="kamikouchiClass" area-label="上高地">
-                    上高地(乗鞍・穂高槍)<select v-model="kamikouchiValue">
+                    上高地(乗鞍・穂高槍)<select v-model.number="kamikouchiValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -236,7 +247,7 @@
                     </select>
                 </li>
                 <li class="grid-item four-two" :class="suwaClass" area-label="諏訪">
-                    諏訪(霧ヶ峰・八ヶ岳)<select v-model="suwaValue">
+                    諏訪(霧ヶ峰・八ヶ岳)<select v-model.number="suwaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -247,7 +258,7 @@
                     </select>
                 </li>
                 <li class="grid-item five-one" :class="kisoClass" area-label="木曽">
-                    木曽(奈良井・妻籠)<select v-model="kisoValue">
+                    木曽(奈良井・妻籠)<select v-model.number="kisoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -258,7 +269,7 @@
                     </select>
                 </li>
                 <li class="grid-item five-two" :class="kamiinaClass" area-label="上伊那">
-                    上伊那(伊那・木曽駒)<select v-model="kamiinaValue">
+                    上伊那(伊那・木曽駒)<select v-model.number="kamiinaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -269,7 +280,7 @@
                     </select>
                 </li>
                 <li class="grid-item six-one" :class="shimoinaClass" area-label="下伊那">
-                    下伊那(飯田・天竜峡)<select v-model="shimoinaValue">
+                    下伊那(飯田・天竜峡)<select v-model.number="shimoinaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -307,23 +318,17 @@
             computed: {
                 kitaAzumiClass() {
                     switch (this.kitaAzumiValue) {
-                        case '1':
-                            document.querySelector('.top-left').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.top-left').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.top-left').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.top-left').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.top-left').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.top-left').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -331,23 +336,17 @@
                 },
                 hokushinClass() {
                     switch (this.hokushinValue) {
-                        case '1':
-                            document.querySelector('.top-center').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.top-center').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.top-center').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.top-center').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.top-center').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.top-center').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -355,23 +354,17 @@
                 },
                 naganoClass() {
                     switch (this.naganoValue) {
-                        case '1':
-                            document.querySelector('.top-right').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.top-right').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.top-right').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.top-right').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.top-right').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.top-right').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -379,23 +372,17 @@
                 },
                 uedaClass() {
                     switch (this.uedaValue) {
-                        case '1':
-                            document.querySelector('.middle-left').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.middle-left').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.middle-left').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.middle-left').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.middle-left').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.middle-left').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -403,23 +390,17 @@
                 },
                 matsumotoClass() {
                     switch (this.matsumotoValue) {
-                        case '1':
-                            document.querySelector('.middle-center').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.middle-center').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.middle-center').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.middle-center').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.middle-center').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.middle-center').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -427,23 +408,17 @@
                 },
                 sakuClass() {
                     switch (this.sakuValue) {
-                        case '1':
-                            document.querySelector('.far-left').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.far-left').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.far-left').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.far-left').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.far-left').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.far-left').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -451,23 +426,17 @@
                 },
                 kamikouchiClass() {
                     switch (this.kamikouchiValue) {
-                        case '1':
-                            document.querySelector('.bottom-left').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.bottom-left').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.bottom-left').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.bottom-left').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.bottom-left').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.bottom-left').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -475,23 +444,17 @@
                 },
                 suwaClass() {
                     switch (this.suwaValue) {
-                        case '1':
-                            document.querySelector('.bottom-center').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.bottom-center').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.bottom-center').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.bottom-center').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.bottom-center').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.bottom-center').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -499,23 +462,17 @@
                 },
                 kisoClass() {
                     switch (this.kisoValue) {
-                        case '1':
-                            document.querySelector('.bottom-right').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.bottom-right').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.bottom-right').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.bottom-right').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.bottom-right').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.bottom-right').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -523,23 +480,17 @@
                 },
                 kamiinaClass() {
                     switch (this.kamiinaValue) {
-                        case '1':
-                            document.querySelector('.bottom-right').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.bottom-right').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.bottom-right').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.bottom-right').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.bottom-right').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.bottom-right').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -547,23 +498,17 @@
                 },
                 shimoinaClass() {
                     switch (this.shimoinaValue) {
-                        case '1':
-                            document.querySelector('.far-center').classList.add('skyblue-bg');
+                        case 1:
                             return 'skyblue-bg';
-                        case '2':
-                            document.querySelector('.far-center').classList.add('yellowgreen-bg');
+                        case 2:
                             return 'yellowgreen-bg';
-                        case '3':
-                            document.querySelector('.far-center').classList.add('orange-bg');
+                        case 3:
                             return 'orange-bg';
-                        case '4':
-                            document.querySelector('.far-center').classList.add('violet-bg');
+                        case 4:
                             return 'violet-bg';
-                        case '5':
-                            document.querySelector('.far-center').classList.add('teal-bg');
+                        case 5:
                             return 'teal-bg';
-                        case '6':
-                            document.querySelector('.far-center').classList.add('orangered-bg');
+                        case 6:
                             return 'orangered-bg';
                         default:
                             return '';
@@ -571,9 +516,6 @@
                 },
             },
             methods: {
-                getKitaAzumiClass() {
-                    return this.kitaAzumiClass;
-                },
                 announceLevel() {
                     if (this.shinshuCompletePoint > 55) {
                         this.shinshuCompleteLevelStatus = "信州人"
@@ -686,49 +628,405 @@
                 }
             },
             watch: {
-                kitaAzumiValue: function () {
+                kitaAzumiValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.top-left');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                hokushinValue: function () {
+                hokushinValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.top-center');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                naganoValue: function () {
+                naganoValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.top-right');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                uedaValue: function () {
+                uedaValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.middle-left');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                matsumotoValue: function () {
+                matsumotoValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.middle-center');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                sakuValue: function () {
+                sakuValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.middle-right');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                kamikouchiValue: function () {
+                kamikouchiValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.bottom-left');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                suwaValue: function () {
+                suwaValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.bottom-center');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                kisoValue: function () {
+                kisoValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.bottom-right');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                kamiinaValue: function () {
+                kamiinaValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.far-left');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 },
-                shimoinaValue: function () {
+                shimoinaValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
+                    const element = document.querySelector('.far-center');
+                    const element2 = document.querySelector('.far-right');
+                    element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    element2.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    switch (newVal) {
+                        case 1:
+                            element.classList.add('skyblue-bg');
+                            element2.classList.add('skyblue-bg');
+                            break;
+                        case 2:
+                            element.classList.add('yellowgreen-bg');
+                            element2.classList.add('yellowgreen-bg');
+                            break;
+                        case 3:
+                            element.classList.add('orange-bg');
+                            element2.classList.add('orange-bg');
+                            break;
+                        case 4:
+                            element.classList.add('violet-bg');
+                            element2.classList.add('violet-bg');
+                            break;
+                        case 5:
+                            element.classList.add('teal-bg');
+                            element2.classList.add('teal-bg');
+                            break;
+                        case 6:
+                            element.classList.add('orangered-bg');
+                            element2.classList.add('orangered-bg');
+                            break;
+                        default:
+                            break;
+                    }
                 }
             },
             created() {
