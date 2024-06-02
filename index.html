@@ -6,6 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>信州制県レベル</title>
     <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
         .nagano_city_map {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -131,27 +150,29 @@
         <div class="nagano_map">
             <h1>信州制県レベル</h1>
             <p>あなたは広大な信濃の国を、どれくらい制覇していますか？</p>
-            <p>あなたの信州制県ステータスは、、<br><strong>{{ shinshuCompleteLevelStatus }}</strong>です！</p>
-            <p>{{ shinshuCompleteLevelMsg }}</p>
+            <p>あなたの信州制県ステータスは、、</p>
+            <h2>{{ shinshuCompleteLevelStatus }}</h2>です！
+            <h3>{{ shinshuCompleteLevelMsg }}</h3>
             <p v-if="shinshuCompletePoint >= 0">あなたの信州制県レベルは、、<strong>{{shinshuCompletePoint}} / 66ポイント</strong>です！</p>
-            <div class="resetPullDown">
-                <button v-on:click="resetPullDown">Lvリセット</button>
-                <br>
+            <div class="d-flex">
+                <div>
+                    <div class="resetPullDown">
+                        <button @click="resetPullDown">Lvリセット</button>
+                    </div>
+                    <div class="showModal">
+                        <button @click="showModal">実装作成中</button>
+                        <div v-if="isModalOpen" class="modal">
+                            <div class="modal-content">
+                                モーダルのコンテンツをここに配置
+                                <button @click="capture">画面の写真を撮影します</button>
+                                <button @click="closeModal">閉じる</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="container">
-                <div class="segment segment-1" :class="kitaAzumiClass"></div>
-                <div class="segment segment-2"></div>
-                <div class="segment segment-3"></div>
-                <div class="segment segment-4"></div>
-                <div class="segment segment-5"></div>
-                <div class="segment segment-6"></div>
-                <div class="segment segment-7"></div>
-                <div class="segment segment-8"></div>
-                <div class="segment segment-9"></div>
-                <div class="segment segment-10"></div>
-                <div class="segment segment-11"></div>
-            </div>
-            <div class="image-container">
+            <br>
+            <div id="captureTarget" class="image-container">
                 <div class="top-left" area-label="1"></div>
                 <div class="top-center" area-label="2"></div>
                 <div class="top-right" area-label="3"></div>
@@ -164,7 +185,6 @@
                 <div class="far-left" area-label="10"></div>
                 <div class="far-center" area-label="11"></div>
                 <div class="far-right" area-label="12"></div>
-
             </div>
             <br>
             <h2>入力値</h2>
@@ -191,28 +211,6 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item two-one" :class="naganoClass" area-label="長野" id="nagano">
-                    長野(千曲・戸隠)<select v-model.number="naganoValue">
-                        <option value=0 selected>Lv.0: Never / 未訪問</option>
-                        <option value=1>Lv.1: Passed / 通過した</option>
-                        <option value=2>Lv.2: Alighted / 降りた</option>
-                        <option value=3>Lv.3: Visited / 歩いた</option>
-                        <option value=4>Lv.4: Stayed / 泊まった</option>
-                        <option value=5>Lv.5: ALot / 何度も訪れた</option>
-                        <option value=6>Lv.6: Lived / 住んだ</option>
-                    </select>
-                </li>
-                <li class="grid-item two-two" :class="uedaClass" area-label="上田" id="ueda">
-                    上田(別所・菅平)<select v-model.number="uedaValue">
-                        <option value=0 selected>Lv.0: Never / 未訪問</option>
-                        <option value=1>Lv.1: Passed / 通過した</option>
-                        <option value=2>Lv.2: Alighted / 降りた</option>
-                        <option value=3>Lv.3: Visited / 歩いた</option>
-                        <option value=4>Lv.4: Stayed / 泊まった</option>
-                        <option value=5>Lv.5: ALot / 何度も訪れた</option>
-                        <option value=6>Lv.6: Lived / 住んだ</option>
-                    </select>
-                </li>
                 <li class="grid-item three-one" :class="matsumotoClass" area-label="松本">
                     松本(安曇野・常念岳)<select v-model.number="matsumotoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
@@ -224,8 +222,8 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item three-two" :class="sakuClass" area-label="佐久">
-                    佐久(小諸・軽井沢)<select v-model.number="sakuValue">
+                <li class="grid-item two-one" :class="naganoClass" area-label="長野" id="nagano">
+                    長野(千曲・戸隠)<select v-model.number="naganoValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -246,8 +244,8 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item four-two" :class="suwaClass" area-label="諏訪">
-                    諏訪(霧ヶ峰・八ヶ岳)<select v-model.number="suwaValue">
+                <li class="grid-item three-two" :class="sakuClass" area-label="佐久">
+                    上田・佐久(軽井沢)<select v-model.number="uedaAndSakuValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -268,8 +266,8 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
-                <li class="grid-item five-two" :class="kamiinaClass" area-label="上伊那">
-                    上伊那(伊那・木曽駒)<select v-model.number="kamiinaValue">
+                <li class="grid-item four-two" :class="suwaClass" area-label="諏訪">
+                    諏訪(霧ヶ峰・八ヶ岳)<select v-model.number="suwaValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
                         <option value=1>Lv.1: Passed / 通過した</option>
                         <option value=2>Lv.2: Alighted / 降りた</option>
@@ -290,24 +288,39 @@
                         <option value=6>Lv.6: Lived / 住んだ</option>
                     </select>
                 </li>
+                <li class="grid-item five-two" :class="kamiinaClass" area-label="上伊那">
+                    上伊那(伊那・木曽駒)<select v-model.number="kamiinaValue">
+                        <option value=0 selected>Lv.0: Never / 未訪問</option>
+                        <option value=1>Lv.1: Passed / 通過した</option>
+                        <option value=2>Lv.2: Alighted / 降りた</option>
+                        <option value=3>Lv.3: Visited / 歩いた</option>
+                        <option value=4>Lv.4: Stayed / 泊まった</option>
+                        <option value=5>Lv.5: ALot / 何度も訪れた</option>
+                        <option value=6>Lv.6: Lived / 住んだ</option>
+                    </select>
+                </li>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1/dist/html2canvas.min.js"></script>
+
     <script>
         new Vue({
             el: '#app',
             data() {
                 return {
+                    isModalOpen: false,
                     shinshuCompletePoint: 0,
                     shinshuCompleteLevelStatus: "",
                     shinshuCompleteLevelMsg: "",
                     kitaAzumiValue: '0',
                     hokushinValue: '0',
                     naganoValue: '0',
-                    uedaValue: '0',
+                    uedaAndSakuValue: '0',
                     matsumotoValue: '0',
-                    sakuValue: '0',
+                    uedaAndSakuValue: '0',
                     kamikouchiValue: '0',
                     kisoValue: '0',
                     suwaValue: '0',
@@ -371,7 +384,7 @@
                     }
                 },
                 uedaClass() {
-                    switch (this.uedaValue) {
+                    switch (this.uedaAndSakuValue) {
                         case 1:
                             return 'skyblue-bg';
                         case 2:
@@ -407,7 +420,7 @@
                     }
                 },
                 sakuClass() {
-                    switch (this.sakuValue) {
+                    switch (this.uedaAndSakuValue) {
                         case 1:
                             return 'skyblue-bg';
                         case 2:
@@ -516,6 +529,22 @@
                 },
             },
             methods: {
+                capture() {
+                    alert('実装作成中…');
+                    // const captureArea = document.getElementById('captureTarget');
+                    // html2canvas(captureArea).then(canvas => {
+                    //     const link = document.createElement('a');
+                    //     link.href = canvas.toDataURL('image/png');
+                    //     link.download = 'capture.png';
+                    //     link.click();
+                    // });
+                },
+                showModal() {
+                    this.isModalOpen = true;
+                },
+                closeModal() {
+                    this.isModalOpen = false;
+                },
                 announceLevel() {
                     if (this.shinshuCompletePoint > 55) {
                         this.shinshuCompleteLevelStatus = "信州人"
@@ -523,9 +552,9 @@
                     } else if (this.kitaAzumiValue < 2
                         && this.hokushinValue < 2
                         && this.naganoValue > 2
-                        && this.uedaValue < 2
+                        && this.uedaAndSakuValue < 2
                         && this.matsumotoValue > 2
-                        && this.sakuValue < 2
+                        && this.uedaAndSakuValue < 2
                         && this.kamikouchiValue < 2
                         && this.kisoValue < 2
                         && this.suwaValue < 2
@@ -537,9 +566,9 @@
                         && this.kitaAzumiValue > 3
                         && this.hokushinValue > 3
                         && this.naganoValue > 3
-                        && this.uedaValue > 3
+                        && this.uedaAndSakuValue > 3
                         && this.matsumotoValue > 3
-                        && this.sakuValue > 3
+                        && this.uedaAndSakuValue > 3
                         && this.kamikouchiValue > 3
                         && this.kisoValue > 3
                         && this.suwaValue > 3
@@ -559,17 +588,17 @@
                     } else if (this.shinshuCompletePoint > 6) {
                         this.shinshuCompleteLevelStatus = "信州ファン"
                         this.shinshuCompleteLevelMsg = "いろいろなところを訪れて信州を楽しんでくださいね！"
-                    } else if (this.shinshuCompletePoint == this.sakuValue
-                        && this.sakuValue > 1) {
+                    } else if (this.shinshuCompletePoint == this.uedaAndSakuValue
+                        && this.uedaAndSakuValue > 1) {
                         this.shinshuCompleteLevelStatus = "軽井沢ファン"
                         this.shinshuCompleteLevelMsg = "ぜひ軽井沢より先の信州にも行ってみてください！"
                     } else if (this.shinshuCompletePoint > 3
                         && this.kitaAzumiValue < 6
                         && this.hokushinValue < 6
                         && this.naganoValue < 6
-                        && this.uedaValue < 6
+                        && this.uedaAndSakuValue < 6
                         && this.matsumotoValue < 6
-                        && this.sakuValue < 6
+                        && this.uedaAndSakuValue < 6
                         && this.kamikouchiValue < 6
                         && this.kisoValue < 6
                         && this.suwaValue < 6
@@ -581,9 +610,9 @@
                         || this.kitaAzumiValue == 6
                         || this.hokushinValue == 6
                         || this.naganoValue == 6
-                        || this.uedaValue == 6
+                        || this.uedaAndSakuValue == 6
                         || this.matsumotoValue == 6
-                        || this.sakuValue == 6
+                        || this.uedaAndSakuValue == 6
                         || this.kamikouchiValue == 6
                         || this.kisoValue == 6
                         || this.suwaValue == 6
@@ -603,9 +632,9 @@
                     this.shinshuCompletePoint = parseInt(this.kitaAzumiValue)
                         + parseInt(this.hokushinValue)
                         + parseInt(this.naganoValue)
-                        + parseInt(this.uedaValue)
+                        + parseInt(this.uedaAndSakuValue)
                         + parseInt(this.matsumotoValue)
-                        + parseInt(this.sakuValue)
+                        + parseInt(this.uedaAndSakuValue)
                         + parseInt(this.kamikouchiValue)
                         + parseInt(this.suwaValue)
                         + parseInt(this.kisoValue)
@@ -616,9 +645,9 @@
                     this.kitaAzumiValue = 0
                     this.hokushinValue = 0
                     this.naganoValue = 0
-                    this.uedaValue = 0
+                    this.uedaAndSakuValue = 0
                     this.matsumotoValue = 0
-                    this.sakuValue = 0
+                    this.uedaAndSakuValue = 0
                     this.kamikouchiValue = 0
                     this.suwaValue = 0
                     this.kisoValue = 0
@@ -632,7 +661,16 @@
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
                     const element = document.querySelector('.top-left');
+                    const element2 = document.querySelector('.top-right');
                     element.classList.remove(
+                        'skyblue-bg',
+                        'yellowgreen-bg',
+                        'orange-bg',
+                        'violet-bg',
+                        'teal-bg',
+                        'orangered-bg'
+                    );
+                    element2.classList.remove(
                         'skyblue-bg',
                         'yellowgreen-bg',
                         'orange-bg',
@@ -643,21 +681,27 @@
                     switch (newVal) {
                         case 1:
                             element.classList.add('skyblue-bg');
+                            element2.classList.add('skyblue-bg');
                             break;
                         case 2:
                             element.classList.add('yellowgreen-bg');
+                            element2.classList.add('yellowgreen-bg');
                             break;
                         case 3:
                             element.classList.add('orange-bg');
+                            element2.classList.add('orange-bg');
                             break;
                         case 4:
                             element.classList.add('violet-bg');
+                            element2.classList.add('violet-bg');
                             break;
                         case 5:
                             element.classList.add('teal-bg');
+                            element2.classList.add('teal-bg');
                             break;
                         case 6:
                             element.classList.add('orangered-bg');
+                            element2.classList.add('orangered-bg');
                             break;
                         default:
                             break;
@@ -699,41 +743,6 @@
                     }
                 },
                 naganoValue(newVal) {
-                    this.calculateshinshuCompletePoint()
-                    this.announceLevel()
-                    const element = document.querySelector('.top-right');
-                    element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
-                    );
-                    switch (newVal) {
-                        case 1:
-                            element.classList.add('skyblue-bg');
-                            break;
-                        case 2:
-                            element.classList.add('yellowgreen-bg');
-                            break;
-                        case 3:
-                            element.classList.add('orange-bg');
-                            break;
-                        case 4:
-                            element.classList.add('violet-bg');
-                            break;
-                        case 5:
-                            element.classList.add('teal-bg');
-                            break;
-                        case 6:
-                            element.classList.add('orangered-bg');
-                            break;
-                        default:
-                            break;
-                    }
-                },
-                uedaValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
                     const element = document.querySelector('.middle-left');
@@ -803,7 +812,7 @@
                             break;
                     }
                 },
-                sakuValue(newVal) {
+                uedaAndSakuValue(newVal) {
                     this.calculateshinshuCompletePoint()
                     this.announceLevel()
                     const element = document.querySelector('.middle-right');
