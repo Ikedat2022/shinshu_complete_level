@@ -19,33 +19,33 @@
             padding: 10px;
         }
 
-        .skyblue-bg {
+        .level1-bg-color {
             background-color: #CFE6DA;
             background-blend-mode: multiply;
         }
 
-        .yellowgreen-bg {
+        .level2-bg-color {
             background-color: #B8E6CE;
             background-blend-mode: multiply;
         }
 
-        .orange-bg {
+        .level3-bg-color {
             background-color: #8AE6B6;
             background-blend-mode: multiply;
         }
 
-        .violet-bg {
+        .level4-bg-color {
             background-color: #00E66F;
             background-blend-mode: multiply;
         }
 
-        .teal-bg {
+        .level5-bg-color {
             background-color: #00B356;
             background-blend-mode: multiply;
         }
 
-        .orangered-bg {
-            background-color: #4F9900;
+        .level6-bg-color {
+            background-color: orange;
             background-blend-mode: multiply;
         }
 
@@ -72,7 +72,7 @@
         }
 
         .image-container div {
-            background-image: url('images/naganoPrefecturePhoto.png');
+            background-image: url("images/naganoPrefecturePhoto.png");
             background-size: 200% 600%;
         }
 
@@ -124,8 +124,13 @@
             background-position: 100% 100%;
         }
 
-        .width-test {
-            width: 500px;
+        .width-capture-target {
+            width: 605px;
+        }
+
+        .size-table {
+            width: 194px;
+            height: 165px;
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -136,27 +141,30 @@
     <div id="app">
         <div class="nagano_map">
             <h1>信州制県レベル</h1>
-            <p>あなたは広大な信濃の国を、どれくらい制覇していますか？</p>
-            <div id="captureTarget" class="mb-1 width-test">
-                <div class="fs-5 mb-1">あなたの信州制県ステータスは・・・</div>
-                <div class="mb-2"><strong class="fs-1 me-2">{{ shinshuCompleteLevelStatus }}</strong>です！</div>
-                <div class="fs-3 mb-2">{{ shinshuCompleteLevelMsg }}</div>
-                <div v-if="shinshuCompletePoint >= 0" class="mb-1"><span class="me-1">あなたの信州制県レベルは</span><strong
+            <div class="fs-5 ms-1 mb-4">〜あなたは広大な信濃の国を、どれくらい制覇していますか？〜</div>
+            <div id="captureTarget" class="mt-1 mb-3 width-capture-target">
+                <div class="fs-5 ms-1 mb-1">あなたの信州制県ステータスは・・・</div>
+                <div class="ms-3 mb-2"><strong class="fs-1 me-2">{{ shinshuCompleteLevelStatus }}</strong>です！</div>
+                <div class="fs-5 ms-1 mb-2">{{ shinshuCompleteLevelMsg }}</div>
+                <div v-if="shinshuCompletePoint >= 0" class="ms-1 mb-2"><span class="me-1">あなたの信州制県レベルは</span><strong
                         class="fs-5 me-1">{{shinshuCompletePoint}} / 66ポイント</strong>です！
                 </div>
-                <div class="image-container">
-                    <div class="top-left" area-label="1"></div>
-                    <div class="top-center" area-label="2"></div>
-                    <div class="top-right" area-label="3"></div>
-                    <div class="middle-left" area-label="4"></div>
-                    <div class="middle-center" area-label="5"></div>
-                    <div class="middle-right" area-label="6"></div>
-                    <div class="bottom-left" area-label="7"></div>
-                    <div class="bottom-center" area-label="8"></div>
-                    <div class="bottom-right" area-label="9"></div>
-                    <div class="far-left" area-label="10"></div>
-                    <div class="far-center" area-label="11"></div>
-                    <div class="far-right" area-label="12"></div>
+                <div class="d-flex">
+                    <div class="image-container ms-1 me-1">
+                        <div class="top-left" area-label="1"></div>
+                        <div class="top-center" area-label="2"></div>
+                        <div class="top-right" area-label="3"></div>
+                        <div class="middle-left" area-label="4"></div>
+                        <div class="middle-center" area-label="5"></div>
+                        <div class="middle-right" area-label="6"></div>
+                        <div class="bottom-left" area-label="7"></div>
+                        <div class="bottom-center" area-label="8"></div>
+                        <div class="bottom-right" area-label="9"></div>
+                        <div class="far-left" area-label="10"></div>
+                        <div class="far-center" area-label="11"></div>
+                        <div class="far-right" area-label="12"></div>
+                    </div>
+                    <img src="images/shinshuCompleteLevelTable.png" class="size-table mt-auto">
                 </div>
             </div>
             <div class="d-flex">
@@ -169,7 +177,7 @@
             </div>
             <br>
             <h2>入力値</h2>
-            <div class="nagano_city_map">
+            <div class="nagano_city_map ms-2">
                 <li class="grid-item one-one" :class="kitaAzumiClass" area-label="北安曇" id="kitaAzumi">
                     北安曇(白馬・大町)<select v-model.number="kitaAzumiValue">
                         <option value=0 selected>Lv.0: Never / 未訪問</option>
@@ -312,17 +320,17 @@
                 kitaAzumiClass() {
                     switch (this.kitaAzumiValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -330,17 +338,17 @@
                 hokushinClass() {
                     switch (this.hokushinValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -348,17 +356,17 @@
                 naganoClass() {
                     switch (this.naganoValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -366,17 +374,17 @@
                 uedaClass() {
                     switch (this.uedaAndSakuValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -384,17 +392,17 @@
                 matsumotoClass() {
                     switch (this.matsumotoValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -402,17 +410,17 @@
                 sakuClass() {
                     switch (this.uedaAndSakuValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -420,17 +428,17 @@
                 kamikouchiClass() {
                     switch (this.kamikouchiValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -438,17 +446,17 @@
                 suwaClass() {
                     switch (this.suwaValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -456,17 +464,17 @@
                 kisoClass() {
                     switch (this.kisoValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -474,17 +482,17 @@
                 kamiinaClass() {
                     switch (this.kamiinaValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -492,17 +500,17 @@
                 shimoinaClass() {
                     switch (this.shimoinaValue) {
                         case 1:
-                            return 'skyblue-bg';
+                            return 'level1-bg-color';
                         case 2:
-                            return 'yellowgreen-bg';
+                            return 'level2-bg-color';
                         case 3:
-                            return 'orange-bg';
+                            return 'level3-bg-color';
                         case 4:
-                            return 'violet-bg';
+                            return 'level4-bg-color';
                         case 5:
-                            return 'teal-bg';
+                            return 'level5-bg-color';
                         case 6:
-                            return 'orangered-bg';
+                            return 'level6-bg-color';
                         default:
                             return '';
                     }
@@ -636,45 +644,45 @@
                     const element = document.querySelector('.top-left');
                     const element2 = document.querySelector('.top-right');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     element2.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
-                            element2.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
+                            element2.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
-                            element2.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
+                            element2.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
-                            element2.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
+                            element2.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
-                            element2.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
+                            element2.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
-                            element2.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
+                            element2.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
-                            element2.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
+                            element2.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -685,31 +693,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.top-center');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -720,31 +728,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.middle-left');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -755,31 +763,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.middle-center');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -790,31 +798,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.middle-right');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -825,31 +833,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.bottom-left');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -860,31 +868,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.bottom-center');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -895,31 +903,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.bottom-right');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -930,31 +938,31 @@
                     this.announceLevel()
                     const element = document.querySelector('.far-left');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
@@ -966,45 +974,45 @@
                     const element = document.querySelector('.far-center');
                     const element2 = document.querySelector('.far-right');
                     element.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     element2.classList.remove(
-                        'skyblue-bg',
-                        'yellowgreen-bg',
-                        'orange-bg',
-                        'violet-bg',
-                        'teal-bg',
-                        'orangered-bg'
+                        'level1-bg-color',
+                        'level2-bg-color',
+                        'level3-bg-color',
+                        'level4-bg-color',
+                        'level5-bg-color',
+                        'level6-bg-color'
                     );
                     switch (newVal) {
                         case 1:
-                            element.classList.add('skyblue-bg');
-                            element2.classList.add('skyblue-bg');
+                            element.classList.add('level1-bg-color');
+                            element2.classList.add('level1-bg-color');
                             break;
                         case 2:
-                            element.classList.add('yellowgreen-bg');
-                            element2.classList.add('yellowgreen-bg');
+                            element.classList.add('level2-bg-color');
+                            element2.classList.add('level2-bg-color');
                             break;
                         case 3:
-                            element.classList.add('orange-bg');
-                            element2.classList.add('orange-bg');
+                            element.classList.add('level3-bg-color');
+                            element2.classList.add('level3-bg-color');
                             break;
                         case 4:
-                            element.classList.add('violet-bg');
-                            element2.classList.add('violet-bg');
+                            element.classList.add('level4-bg-color');
+                            element2.classList.add('level4-bg-color');
                             break;
                         case 5:
-                            element.classList.add('teal-bg');
-                            element2.classList.add('teal-bg');
+                            element.classList.add('level5-bg-color');
+                            element2.classList.add('level5-bg-color');
                             break;
                         case 6:
-                            element.classList.add('orangered-bg');
-                            element2.classList.add('orangered-bg');
+                            element.classList.add('level6-bg-color');
+                            element2.classList.add('level6-bg-color');
                             break;
                         default:
                             break;
